@@ -16,5 +16,6 @@ Odoo Integration with Twilio Messaging
         payload = {'message': 'message body here', 'text_to': 'To phone', 'api_type': 'sms type here'}
         response = self.env['twilio_odoo_messenger.api']._twilio_messaging(payload)
 ```
+3. Examine the response which contains status code and info dict.
 
 
