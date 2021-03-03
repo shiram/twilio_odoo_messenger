@@ -9,11 +9,15 @@
                 <sheet>
                     <group>
                         <field name="twilio_template" string="Template"/>
-                        <field name="message_detail" string="Name"/>
-                        <field name="auth_code" string="Code" attrs="{'invisible': [('twilio_template', '!=', 'auth_template')]}"/>
-                        <field name="order_detail" string="Order Name" attrs="{'invisible': [('twilio_template', '!=', 'order_template')]}"/>
-                        <field name="message_date" strig="Date" attrs="{'invisible': [('twilio_template', '=', 'auth_template')]}"/>
-                        <field name="order_url" string="Order URL" attrs="{'invisible': [('twilio_template', '!=', 'order_template')]}"/>
+                        <field name="message_detail" string="Name" required="1"/>
+                        <field name="auth_code" string="Code" attrs="{'invisible': [('twilio_template', '!=', 'auth_template')],
+                        'required': [('twilio_template', '=', 'auth_template')]}"/>
+                        <field name="order_detail" string="Order Name" attrs="{'invisible': [('twilio_template', '!=', 'order_template')],
+                        'required': [('twilio_template', '=', 'order_template')]}"/>
+                        <field name="message_date" strig="Date" attrs="{'invisible': [('twilio_template', '=', 'auth_template')],
+                        'required': [('twilio_template', '!=', 'auth_template')]}"/>
+                        <field name="order_url" string="Order URL" attrs="{'invisible': [('twilio_template', '!=', 'order_template')],
+                        'required': [('twilio_template', '=', 'order_template')]}"/>
                     </group>
                 </sheet>
                 <footer>
@@ -40,6 +44,46 @@
                 name="Send Whatsapp Message"
                 src_model="res.partner"
                 res_model="twilio_odoo_messenger.send_whatsapp_wizard"
+                view_type="form"
+                view_mode="form"
+                key2="client_action_multi"
+                target="new"
+    />
+
+    <record id="send_twilio_sms_view_form" model="ir.ui.view">
+        <field name="name">twilio_odoo_messenger_sms.form</field>
+        <field name="model">twilio_odoo_messenger.sms_wizard</field>
+        <field name="arch" type="xml">
+            <form string="Send SMS">
+                <sheet>
+                    <group>
+                        <field name="message" required="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <group>
+                        <span>
+                            <button string="Send" type="object" class="oe_highlight" name="action_send_twilio_sms"/>
+                            <button string="Cancel" class="oe_link" special="cancel" />
+                        </span>
+                    </group>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="send_twilio_sms_form_action" model="ir.actions.act_window">
+        <field name="name">Send SMS Message</field>
+        <field name="res_model">twilio_odoo_messenger.sms_wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <act_window id="action_send_sms_message"
+                name="Send SMS Twilio"
+                src_model="res.partner"
+                res_model="twilio_odoo_messenger.sms_wizard"
                 view_type="form"
                 view_mode="form"
                 key2="client_action_multi"

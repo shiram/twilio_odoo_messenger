@@ -17,7 +17,7 @@
                     <button
                         type="action"
                         name="%(twilio_odoo_messenger.send_twilio_whatsapp_form_action)d"
-                        class="btn-sm btn-link mb4 fa fa-whatsapp-o"
+                        class="btn-sm btn-link mb4 fa fa-whatsapp"
                         aria-label="Send Whatsapp Message"
                         title="Send Whatsapp Message"
                         attrs="{'invisible':[('whatsapp_phone_number', '=', False)]}"
@@ -44,7 +44,7 @@
                     <button
                         type="action"
                         name="%(twilio_odoo_messenger.send_twilio_whatsapp_form_action)d"
-                        class="btn-sm btn-link mb4 fa fa-whatsapp-o"
+                        class="btn-sm btn-link mb4 fa fa-whatsapp"
                         aria-label="Send Whatsapp Message"
                         title="Send Whatsapp Message"
                         attrs="{'invisible':[('whatsapp_phone_number', '=', False)]}"
@@ -71,7 +71,7 @@
                     <button
                         type="action"
                         name="%(twilio_odoo_messenger.send_twilio_whatsapp_form_action)d"
-                        class="btn-sm btn-link mb4 fa fa-whatsapp-o"
+                        class="btn-sm btn-link mb4 fa fa-whatsapp"
                         aria-label="Send Whatsapp Message"
                         title="Send Whatsapp Message"
                         attrs="{'invisible':[('whatsapp_phone_number', '=', False)]}"

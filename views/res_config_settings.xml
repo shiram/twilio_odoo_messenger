@@ -26,6 +26,12 @@
                                             <label for="twilio_auth_token" string="Auth Token"/>
                                             <field name="twilio_auth_token"/>
                                         </div>
+
+                                        <div class="mt16">
+                                            <label for="twilio_phone_number" string="Twilio Phone Number"/>
+                                            <field name="twilio_phone_number"/>
+                                        </div>
+
                                         <div class="mt16">
                                             <div class="text-muted">
                                                 The format for this number is a whatsapp: prefix, followed by the E.164 representation of the phone number.
@@ -40,17 +46,6 @@
                                     </div>
                                 </div>
                             </div>
-<!--                            <div class="col-12 col-lg-6 o_setting_box">-->
-<!--                                <div class="o_setting_left_pane">-->
-<!--                                    <field name="google_autocomplete_lang_restrict"/>-->
-<!--                                </div>-->
-<!--                                <div class="o_setting_right_pane">-->
-<!--                                    <label for="google_autocomplete_lang_restrict"/>-->
-<!--                                    <div class="text-muted">-->
-<!--                                        The language code, indicating in which language the results should be returned, if possible. Searches are also biased to the selected language; results in the selected language may be given a higher ranking.-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
                         </div>
 <!--                        <h2 groups="base.group_no_one"> Google Maps Libraries </h2>-->
 <!--                        <div class="row mt16 o_settings_container" groups="base.group_no_one">-->

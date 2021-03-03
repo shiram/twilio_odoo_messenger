@@ -18,10 +18,6 @@ class Partner(models.Model):
 
     whatsapp_phone_number = fields.Char(string='Whatsapp Number')
 
-    @api.one
-    def send_whatsapp_message(self):
-        print("Send whatsapp method logic")
-
 
 class SendWhatsappWizard(models.TransientModel):
     _name = 'twilio_odoo_messenger.send_whatsapp_wizard'
@@ -54,17 +50,37 @@ class SendWhatsappWizard(models.TransientModel):
             raise ValidationError(_('Partner does not have a valid whatsapp number set.'))
         if self.twilio_template == 'auth_template':
             message = "Your {0} code is {1}".format(self.message_detail, self.auth_code)
-            payload = {'message': message, 'text_to': record.whatsapp_phone_number}
+            payload = {'message': message, 'text_to': record.whatsapp_phone_number, 'api_type': 'whatsapp'}
         elif self.twilio_template == 'appointment_template':
             message = "Your {0} appointment is comming up on {1}".format(self.message_detail, self.message_date)
-            payload = {'message': message, 'text_to': record.whatsapp_phone_number}
+            payload = {'message': message, 'text_to': record.whatsapp_phone_number, 'api_type': 'whatsapp'}
         elif self.twilio_template == 'order_template':
             message = "Your {0} order of {1} has been shipped and should be delivered on {2}. Details: {3}".format(
                 self.message_detail, self.order_detail, self.message_date, self.order_url
             )
-            payload = {'message': message, 'text_to': record.whatsapp_phone_number}
+            payload = {'message': message, 'text_to': record.whatsapp_phone_number, 'api_type': 'whatsapp'}
 
-        response = self.env['twilio_odoo_messenger.api']._send_twilio_whatsapp(payload)
+        response = self.env['twilio_odoo_messenger.api']._twilio_messaging(payload)
         print(response)
 
 
+class SendTwilioSMSWizard(models.TransientModel):
+    _name = 'twilio_odoo_messenger.sms_wizard'
+    _description = 'Twilio SMS Wizard'
+
+    message = fields.Text(string="Message")
+
+    @api.one
+    def action_send_twilio_sms(self):
+        model = self.env.context['active_model']
+        active_id = self.env.context['active_id']
+        record = self.env[model].sudo().browse(active_id)
+        if not record:
+            raise AccessError(_('No Partner Record Found'))
+        phone = record.phone if record.phone else record.mobile
+        if not phone:
+            raise ValidationError(_('Partner does not have a valid Mobile or Phone number set.'))
+
+        payload = {'message': self.message, 'text_to': phone, 'api_type': 'sms'}
+        response = self.env['twilio_odoo_messenger.api']._twilio_messaging(payload)
+        print(response)
